@@ -1,3 +1,6 @@
 import { combineReducers } from "redux";
+import slackReducer from "./slackReducer";
 
-export default combineReducers({});
+export default combineReducers({
+  slack: slackReducer,
+});

@@ -4,7 +4,7 @@ import Sidebar from "./components/layout/Sidebar";
 import styled from "styled-components";
 
 // Components
-import Home from "./components/pages/Home";
+import Chat from "./components/pages/Chat";
 
 const App = () => {
   return (
@@ -15,7 +15,7 @@ const App = () => {
           <AppBody>
             <Sidebar />
             <Switch>
-              <Route exact path='/' component={Home} />
+              <Route exact path='/' component={Chat} />
             </Switch>
           </AppBody>
         </>
