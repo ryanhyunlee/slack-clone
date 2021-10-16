@@ -1,14 +1,17 @@
+import { useRef, useEffect } from "react";
 import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import ChatInput from "../layout/ChatInput";
+import Message from "../layout/Message";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { db } from "../../firebase";
 
 const Chat = () => {
+  const chatRef = useRef(null);
   const roomId = useSelector((state) => state.slack.roomId);
-  const [roomDetails] = useDocument(
+  const [roomDetails, loading] = useDocument(
     roomId && db.collection("rooms").doc(roomId)
   );
 
@@ -20,6 +23,11 @@ const Chat = () => {
         .collection("messages")
         .orderBy("timestamp", "asc")
   );
+
+  // Scrool to bottom when component mount
+  useEffect(() => {
+    chatRef?.current?.scrollIntoView();
+  }, [roomId, loading]);
 
   return (
     <ChatContainer>
@@ -38,9 +46,28 @@ const Chat = () => {
           </ChatHeaderRight>
         </ChatHeader>
 
-        <ChatMessages>{/* Chat lists */}</ChatMessages>
+        <ChatMessages>
+          {roomMessages?.docs.map((doc) => {
+            const { message, timestamp, user, userImage } = doc.data();
 
-        <ChatInput channelName={roomDetails?.data().name} channelId={roomId} />
+            return (
+              <Message
+                key={doc.id}
+                message={message}
+                timestamp={timestamp}
+                user={user}
+                userImage={userImage}
+              />
+            );
+          })}
+          <ChatBottom ref={chatRef} />
+        </ChatMessages>
+
+        <ChatInput
+          chatRef={chatRef}
+          channelName={roomDetails?.data().name}
+          channelId={roomId}
+        />
       </>
     </ChatContainer>
   );
@@ -90,3 +117,6 @@ const ChatHeaderRight = styled.div`
 `;
 
 const ChatMessages = styled.div``;
+const ChatBottom = styled.div`
+  padding-bottom: 20px;
+`;

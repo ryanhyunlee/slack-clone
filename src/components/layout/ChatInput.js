@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { db } from "../../firebase";
 import firebase from "firebase";
 
-const ChatInput = ({ channelName, channelId }) => {
+const ChatInput = ({ channelName, channelId, chatRef }) => {
   const [text, setText] = useState("");
 
   const sendMessage = (e) => {
@@ -21,6 +21,9 @@ const ChatInput = ({ channelName, channelId }) => {
       userImage:
         "https://cdn.vox-cdn.com/thumbor/TEXaW-u76LZwYGT_VzmuhCoF52s=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/22802887/IMG_DE272BF718E8_1.jpeg",
     });
+
+    chatRef?.current?.scrollIntoView({ behavior: "smooth" });
+
     setText("");
   };
 
