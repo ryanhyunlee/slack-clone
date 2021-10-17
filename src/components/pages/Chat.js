@@ -3,8 +3,8 @@ import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import ChatInput from "../layout/ChatInput";
-import Message from "../layout/Message";
+import ChatInput from "../layout/chat/ChatInput";
+import Message from "../layout/chat/Message";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { db } from "../../firebase";
 
@@ -31,44 +31,46 @@ const Chat = () => {
 
   return (
     <ChatContainer>
-      <>
-        <ChatHeader>
-          <ChatHeaderLeft>
-            <h4>
-              <strong>#{roomDetails?.data().name}</strong>
-            </h4>
-            <StarBorderOutlinedIcon />
-          </ChatHeaderLeft>
-          <ChatHeaderRight>
-            <p>
-              <InfoOutlinedIcon /> Details
-            </p>
-          </ChatHeaderRight>
-        </ChatHeader>
+      {roomDetails && roomMessages && (
+        <>
+          <ChatHeader>
+            <ChatHeaderLeft>
+              <h4>
+                <strong>#{roomDetails?.data().name}</strong>
+              </h4>
+              <StarBorderOutlinedIcon />
+            </ChatHeaderLeft>
+            <ChatHeaderRight>
+              <p>
+                <InfoOutlinedIcon /> Details
+              </p>
+            </ChatHeaderRight>
+          </ChatHeader>
 
-        <ChatMessages>
-          {roomMessages?.docs.map((doc) => {
-            const { message, timestamp, user, userImage } = doc.data();
+          <ChatMessages>
+            {roomMessages?.docs.map((doc) => {
+              const { message, timestamp, user, userImage } = doc.data();
 
-            return (
-              <Message
-                key={doc.id}
-                message={message}
-                timestamp={timestamp}
-                user={user}
-                userImage={userImage}
-              />
-            );
-          })}
-          <ChatBottom ref={chatRef} />
-        </ChatMessages>
+              return (
+                <Message
+                  key={doc.id}
+                  message={message}
+                  timestamp={timestamp}
+                  user={user}
+                  userImage={userImage}
+                />
+              );
+            })}
+            <ChatBottom ref={chatRef} />
+          </ChatMessages>
 
-        <ChatInput
-          chatRef={chatRef}
-          channelName={roomDetails?.data().name}
-          channelId={roomId}
-        />
-      </>
+          <ChatInput
+            chatRef={chatRef}
+            channelName={roomDetails?.data().name}
+            channelId={roomId}
+          />
+        </>
+      )}
     </ChatContainer>
   );
 };
