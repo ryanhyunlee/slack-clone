@@ -56,10 +56,4 @@ export const HeaderRight = styled.div`
   }
 `;
 
-export const HeaderAvatar = styled(Avatar)`
-  cursor: pointer;
-
-  :hover {
-    opacity: 0.8;
-  }
-`;
+export const HeaderAvatar = styled(Avatar)``;

@@ -14,6 +14,20 @@ export const SidebarContainer = styled.div`
     margin-bottom: 10px;
     border: 1px solid #49274b;
   }
+
+  > button {
+    margin-top: 5rem;
+    margin-left: 20px;
+    color: #fff;
+    font-size: 12px;
+    border: 1px solid #fff;
+    padding: 3px 7px;
+  }
+
+  > button:hover {
+    background-color: #fff;
+    color: #49274b;
+  }
 `;
 
 export const SidebarHeader = styled.div`

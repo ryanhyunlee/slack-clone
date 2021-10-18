@@ -118,7 +118,9 @@ const ChatHeaderRight = styled.div`
   }
 `;
 
-const ChatMessages = styled.div``;
+const ChatMessages = styled.div`
+  margin-bottom: 60px;
+`;
 const ChatBottom = styled.div`
   padding-bottom: 20px;
 `;

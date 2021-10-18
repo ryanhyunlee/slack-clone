@@ -1,4 +1,5 @@
 import { SidebarContainer, SidebarHeader, SidebarInfo } from "./SidebarStyles";
+import { Button } from "@material-ui/core";
 
 // Icons
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
@@ -53,6 +54,9 @@ const Sidebar = () => {
       {channels?.docs.map((doc) => (
         <SidebarOption key={doc.id} id={doc.id} title={doc.data().name} />
       ))}
+
+      {/* Sign out button */}
+      {user && <Button onClick={() => auth.signOut()}>Sign out</Button>}
     </SidebarContainer>
   );
 };
